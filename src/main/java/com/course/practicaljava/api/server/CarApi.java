@@ -1,6 +1,11 @@
 package com.course.practicaljava.api.server;
 
 import org.springframework.http.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +36,14 @@ public class CarApi {
 		return car.toString();
 	}
 
+	@PostMapping( value = "/random-collection", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Car> randomCarArray() {
+		var result = new ArrayList<Car>();
+		
+		for ( int i =0; i < ThreadLocalRandom.current().nextInt(1,6); i++ ) {
+			result.add(carService.generateCar());
+		}
+		
+		return result;
+	}
 }
